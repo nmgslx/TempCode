@@ -64,6 +64,9 @@ namespace WpfPhotoSize
         {
             InitializeComponent();
             LoadDisplayInfo();
+			for (var i = 0; i < displayInfo.Length;i++)
+				comboBox1.Items.Add($"{displayInfo[i].name} {displayInfo[i].width}x{displayInfo[i].height} {displayInfo[i].scaling:F1}");
+			comboBox1.SelectedIndex = 0;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -73,7 +76,8 @@ namespace WpfPhotoSize
             {
                 textBlock1.Text += $"{ display.name } { display.width }x{ display.height }  { display.widthCm }cm x{ display.heightCm }cm { display.widthCm/2.54:F1}x{ display.heightCm / 2.54:F1}\"\n";
             }
-            var disp = displayInfo[0];
+			
+            var disp = displayInfo[comboBox1.SelectedIndex];
             photo4x6.Width = disp.width / disp.widthCm * 2.54 * 6 / disp.scaling;
             photo4x6.Height = disp.height / disp.heightCm * 2.54 * 4 / disp.scaling;
 
@@ -152,7 +156,7 @@ namespace WpfPhotoSize
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            lableState.Content = $"{this.Width} x {this.Height}";
+			lableState.Content = $"{this.ActualWidth} x {this.ActualHeight}";
         }
     }
 }
